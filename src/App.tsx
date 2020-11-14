@@ -1,24 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { createContext, useState } from 'react';
 import './App.css';
+import Map from './components/Map/Map';
+import MapControler from './components/MapControler/MapControler';
+import { PointItem } from './types/types';
+
+const initPointArr: PointItem[] = [];
+export const Context: React.Context<PointItem[]> = createContext(initPointArr);
 
 function App() {
+  const [pointArr, setPointArr] = useState(initPointArr);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Context.Provider value={pointArr}>
+        <Map pointData={pointArr} />
+        <MapControler setPointArr={setPointArr}></MapControler>
+      </Context.Provider>
     </div>
   );
 }
