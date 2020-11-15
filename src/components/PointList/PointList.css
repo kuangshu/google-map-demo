@@ -1,16 +1,16 @@
 .PointList {
   width: 30vw;
-  height: 50vw;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.PointList-AddBtn {
-  width: 80%;
-}
-.PointList-List {
   margin: 0;
   padding: 0;
-  width: 100%;
-  flex: 1;
+  overflow-y: auto;
+}
+
+.PointList-Item {
+  cursor: pointer;
+  list-style: none;
+  line-height: 2vw;
 }

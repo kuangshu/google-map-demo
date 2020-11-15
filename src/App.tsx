@@ -1,20 +1,51 @@
-import React, { createContext, useState } from 'react';
+import React, { useCallback } from 'react';
 import './App.css';
 import Map from './components/Map/Map';
 import MapControler from './components/MapControler/MapControler';
-import { PointItem } from './types/types';
-
-const initPointArr: PointItem[] = [];
-export const Context: React.Context<PointItem[]> = createContext(initPointArr);
+import useMap from './hook/useMap';
+import useMarker from './hook/useMarker';
+import usePolygon from './hook/usePolygon';
 
 function App() {
-  const [pointArr, setPointArr] = useState(initPointArr);
+  const { map, createMap, moveTo, addControl } = useMap();
+  const { markers, createMarkers, removeMarker } = useMarker(map);
+  const { renderPolygon, removePolygon } = usePolygon(map);
+
+  const renderPolygon_ = useCallback(() => {
+    let p = renderPolygon(markers);
+    removeMarker();
+    return p;
+  }, [markers, removeMarker, renderPolygon]);
+
+  const createMarkers_ = useCallback(
+    (points) => {
+      removeMarker();
+      removePolygon();
+      createMarkers(points);
+    },
+    [createMarkers, removeMarker, removePolygon],
+  );
+
   return (
     <div className='App'>
-      <Context.Provider value={pointArr}>
-        <Map pointData={pointArr} />
-        <MapControler setPointArr={setPointArr}></MapControler>
-      </Context.Provider>
+      {window.google ? (
+        <>
+          <Map
+            markers={markers}
+            createMap={createMap}
+            renderPolygon={renderPolygon_}
+            addControl={addControl}
+          />
+          ,
+          <MapControler
+            markers={markers}
+            createMarkers={createMarkers_}
+            moveTo={moveTo}
+          />
+        </>
+      ) : (
+        <div>google 服务异常</div>
+      )}
     </div>
   );
 }

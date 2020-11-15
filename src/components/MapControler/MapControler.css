@@ -1,6 +1,6 @@
 .MapControler {
   width: 30vw;
-  height: 50vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;

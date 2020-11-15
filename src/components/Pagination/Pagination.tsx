@@ -1,27 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Pagination.css';
 
-function Pagination() {
+interface IProp {
+  pageNum: number;
+  nextPage: () => void;
+  prePage: () => void;
+}
+function Pagination({ pageNum, nextPage, prePage }: IProp) {
   return (
     <div className='Pagination'>
-      <button>&lt;</button>
-      <button>&gt;</button>
+      <button onClick={prePage}>&lt;</button>
+      <span>{pageNum}</span>
+      <button onClick={nextPage}>&gt;</button>
     </div>
   );
 }
-
-const usePagination = (startNum = 1) => {
-  const [pageNum, setPageNum] = useState(startNum);
-  const nextPage = () => {
-    setPageNum(pageNum + 1);
-  };
-  const prePage = () => {
-    setPageNum(pageNum - 1);
-  };
-  return {
-    nextPage,
-    prePage,
-  };
-};
 
 export default Pagination;
