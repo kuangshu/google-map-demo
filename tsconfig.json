@@ -15,7 +15,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
-    "types": ["googlemaps", "react"]
+    "types": ["googlemaps", "react"],
+    "allowUmdGlobalAccess": true
   },
   "include": ["src"]
 }

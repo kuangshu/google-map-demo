@@ -28,7 +28,7 @@ const useMarker = (
     },
     [map],
   );
-  const removeMarker = useCallback(() => {
+  const removeMarkers = useCallback(() => {
     markers.map((marker) => marker.setMap(null));
     setMarkers([]);
   }, [markers]);
@@ -36,7 +36,7 @@ const useMarker = (
     markers,
     createMarker,
     createMarkers,
-    removeMarker,
+    removeMarkers,
   };
 };
 

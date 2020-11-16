@@ -1,15 +1,17 @@
 import { useCallback, useRef } from 'react';
+import { centerPoint } from '../Context';
 
 const useMap = () => {
   const map = useRef<google.maps.Map | null>(null);
 
   const createMap = useCallback(
-    (elementId: string, center: google.maps.LatLng) => {
+    (elementId: string, config: google.maps.MapOptions) => {
       map.current = new google.maps.Map(
         document.getElementById(elementId) as HTMLElement,
         {
-          center: center,
-          zoom: 8,
+          center: new google.maps.LatLng(centerPoint[0], centerPoint[1]),
+          zoom: 10,
+          ...config,
         },
       );
     },

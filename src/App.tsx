@@ -2,28 +2,30 @@ import React, { useCallback } from 'react';
 import './App.css';
 import Map from './components/Map/Map';
 import MapControler from './components/MapControler/MapControler';
+import useGeoJson from './hook/useGeoJson';
 import useMap from './hook/useMap';
 import useMarker from './hook/useMarker';
 import usePolygon from './hook/usePolygon';
 
 function App() {
   const { map, createMap, moveTo, addControl } = useMap();
-  const { markers, createMarkers, removeMarker } = useMarker(map);
+  const { markers, createMarkers, removeMarkers } = useMarker(map);
   const { renderPolygon, removePolygon } = usePolygon(map);
+  const { geoJsonRender, removeGeoJSONData} = useGeoJson(map);
 
   const renderPolygon_ = useCallback(() => {
     let p = renderPolygon(markers);
-    removeMarker();
+    removeMarkers();
     return p;
-  }, [markers, removeMarker, renderPolygon]);
+  }, [markers, removeMarkers, renderPolygon]);
 
   const createMarkers_ = useCallback(
     (points) => {
-      removeMarker();
+      removeMarkers();
       removePolygon();
       createMarkers(points);
     },
-    [createMarkers, removeMarker, removePolygon],
+    [createMarkers, removeMarkers, removePolygon],
   );
 
   return (
@@ -36,11 +38,13 @@ function App() {
             renderPolygon={renderPolygon_}
             addControl={addControl}
           />
-          ,
           <MapControler
             markers={markers}
             createMarkers={createMarkers_}
+            removeMarkers={removeMarkers}
             moveTo={moveTo}
+            geoJsonRender={geoJsonRender}
+            removeGeoJSONData={removeGeoJSONData}
           />
         </>
       ) : (

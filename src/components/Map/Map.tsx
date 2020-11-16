@@ -5,7 +5,7 @@ import './Map.css';
 
 interface IProp {
   markers: google.maps.Marker[];
-  createMap: (elementId: string, center: google.maps.LatLng) => void;
+  createMap: (elementId: string, config: google.maps.MapOptions) => void;
   renderPolygon: () => google.maps.Polygon;
   addControl: (
     controlDiv: Element,
@@ -16,7 +16,9 @@ function Map({ createMap, renderPolygon, addControl }: IProp) {
   const colorControl = useRef<ColorControl | null>(null);
 
   useEffect(() => {
-    createMap('map', new google.maps.LatLng(centerPoint[0], centerPoint[1]));
+    createMap('map', {
+      center: new google.maps.LatLng(centerPoint[0], centerPoint[1]),
+    });
   }, [createMap]);
 
   useEffect(() => {
